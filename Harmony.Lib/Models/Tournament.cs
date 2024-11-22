@@ -12,7 +12,6 @@ public class Tournament
     public Round GenerateRound()
     {
         var matchups = new List<Matchup>();
-        // split teams into twos
         for (var i = 0; i < Teams.Count; i += 2)
         {
             matchups.Add(new Matchup

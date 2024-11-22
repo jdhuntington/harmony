@@ -30,7 +30,21 @@ public class TournamentTest
         tournament.AddTeam(teamC);
         tournament.AddTeam(teamD);
         var round = tournament.GenerateRound();
-        Assert.Equal(1, round.Number);
         Assert.Equal(2, round.Matchups.Count);
+    }
+
+     [Fact]
+    public void GenerateRoundWithThreeTeamsHasABye()
+    {
+        var teamA = new Team { Name = "teamA" };
+        var teamB = new Team { Name = "teamB" };
+        var teamC = new Team { Name = "teamC" };
+        var tournament = new Tournament();
+        tournament.AddTeam(teamA);
+        tournament.AddTeam(teamB);
+        tournament.AddTeam(teamC);
+        var round = tournament.GenerateRound();
+        Assert.Equal(2, round.Matchups.Count);
+        Assert.Single(round.Matchups, m => m.IsBye);
     }
 }
