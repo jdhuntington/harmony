@@ -2,11 +2,24 @@ namespace Harmony.Lib.Models;
 
 public class Team
 {
-    public required string Name { get; set; }
-    public bool HadBye { get; private set; }
+    private int _affRounds;
+    private int _negRounds;
+    public required string Name { get; init; }
+    public int? ByeRound { get; private set; }
+    public bool HadBye => ByeRound != null;
 
-    public void RecordBye()
+    public void RecordBye(int round)
     {
-        HadBye = true;
+        ByeRound = round;
+    }
+
+    public void RecordAff(int roundNumber)
+    {
+        _affRounds++;
+    }
+
+    public void RecordNeg(int roundNumber)
+    {
+        _negRounds++;
     }
 }

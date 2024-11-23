@@ -1,4 +1,3 @@
-using Harmony.Lib.Exceptions;
 using Harmony.Lib.Models;
 
 namespace Harmony.Lib.Tests.Models;
@@ -63,10 +62,27 @@ public class TournamentTest
         round1.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
         round1.AddMatchup(new Matchup { Aff = teamC });
         tournament.AddRound(round1);
-        
+
         var round2 = new Round();
         round2.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
         round2.AddMatchup(new Matchup { Aff = teamC });
-       Assert.Throws<TooManyByesException>(() => tournament.AddRound(round2));
+        Assert.Throws<TooManyByesException>(() => tournament.AddRound(round2));
+    }
+
+    [Fact]
+    public void RoundsAreBalanced()
+    {
+        var teamA = new Team { Name = "teamA" };
+        var teamB = new Team { Name = "teamB" };
+        var tournament = new Tournament();
+        tournament.AddTeam(teamA);
+        tournament.AddTeam(teamB);
+        var round1 = new Round();
+        round1.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
+        tournament.AddRound(round1);
+
+        var round2 = new Round();
+        round2.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
+        Assert.Throws<ImbalancedRoundsException>(() => tournament.AddRound(round2));
     }
 }

@@ -14,13 +14,11 @@ public class Tournament
     {
         var matchups = new List<Matchup>();
         for (var i = 0; i < Teams.Count; i += 2)
-        {
             matchups.Add(new Matchup
             {
                 Aff = Teams[i],
                 Neg = i + 1 < Teams.Count ? Teams[i + 1] : null
             });
-        }
         return new Round
         {
             Number = 1,
@@ -28,10 +26,10 @@ public class Tournament
         };
     }
 
-    public void AddRound(Round round1)
+    public void AddRound(Round round)
     {
-        round1.Validate();
-        Rounds.Add(round1);
-        round1.Record();
+        round.Validate();
+        Rounds.Add(round);
+        round.Record();
     }
 }
