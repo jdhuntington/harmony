@@ -1,6 +1,7 @@
-namespace Harmony.Lib.Tests;
-using Harmony.Lib;
+using Harmony.Lib.Exceptions;
 using Harmony.Lib.Models;
+
+namespace Harmony.Lib.Tests.Models;
 
 public class TournamentTest
 {
@@ -33,7 +34,7 @@ public class TournamentTest
         Assert.Equal(2, round.Matchups.Count);
     }
 
-     [Fact]
+    [Fact]
     public void GenerateRoundWithThreeTeamsHasABye()
     {
         var teamA = new Team { Name = "teamA" };
@@ -46,5 +47,26 @@ public class TournamentTest
         var round = tournament.GenerateRound();
         Assert.Equal(2, round.Matchups.Count);
         Assert.Single(round.Matchups, m => m.IsBye);
+    }
+
+    [Fact]
+    public void TeamDoesntGetASecondBye()
+    {
+        var teamA = new Team { Name = "teamA" };
+        var teamB = new Team { Name = "teamB" };
+        var teamC = new Team { Name = "teamC" };
+        var tournament = new Tournament();
+        tournament.AddTeam(teamA);
+        tournament.AddTeam(teamB);
+        tournament.AddTeam(teamC);
+        var round1 = new Round();
+        round1.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
+        round1.AddMatchup(new Matchup { Aff = teamC });
+        tournament.AddRound(round1);
+        
+        var round2 = new Round();
+        round2.AddMatchup(new Matchup { Aff = teamA, Neg = teamB });
+        round2.AddMatchup(new Matchup { Aff = teamC });
+       Assert.Throws<TooManyByesException>(() => tournament.AddRound(round2));
     }
 }

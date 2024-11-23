@@ -2,7 +2,8 @@ namespace Harmony.Lib.Models;
 
 public class Tournament
 {
-    public List<Team> Teams { get; } = new List<Team>();
+    private List<Team> Teams { get; } = [];
+    private List<Round> Rounds { get; } = [];
 
     public void AddTeam(Team team)
     {
@@ -25,5 +26,12 @@ public class Tournament
             Number = 1,
             Matchups = matchups
         };
+    }
+
+    public void AddRound(Round round1)
+    {
+        round1.Validate();
+        Rounds.Add(round1);
+        round1.Record();
     }
 }
