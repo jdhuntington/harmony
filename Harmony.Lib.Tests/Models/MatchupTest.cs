@@ -1,5 +1,4 @@
 ﻿namespace Harmony.Lib.Tests;
-using Harmony.Lib;
 using Harmony.Lib.Models;
 
 public class MatchupTest
