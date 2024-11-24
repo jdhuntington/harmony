@@ -24,14 +24,14 @@ public class Round
     public void PowermatchHighLow(List<Team> teams)
     {
         var powermatch = new PowermatchHighLow();
-        var result = powermatch.SolveMatching(teams.Count);
-        for (var i = 0; i < result.Count; i++)
+        var result = powermatch.SolveMatching(teams);
+        result.ForEach(edge =>
         {
-            Matchups.Add(new Matchup
+            AddMatchup(new Matchup
             {
-                Aff = teams[result[i].Team1],
-                Neg = teams[result[i].Team2]
+                Aff = edge.Aff,
+                Neg = edge.Neg
             });
-        }
+        });
     }
 }

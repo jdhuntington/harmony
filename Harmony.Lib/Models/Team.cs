@@ -11,6 +11,13 @@ public class Team
 
     public int Losses { get; set; }
     public int Wins { get; set; }
+    public bool CanGoAff => AffRounds <= NegRounds;
+    public bool CanGoNeg => NegRounds <= AffRounds;
+
+    public override string ToString()
+    {
+        return $"{Name} ({Wins}-{Losses})";
+    }
 
     public void RecordBye(int round)
     {
@@ -31,8 +38,14 @@ public class Team
 
     private void CheckRoundBalance()
     {
-        if (Math.Abs(AffRounds - NegRounds) > 1) {
+        if (Math.Abs(AffRounds - NegRounds) > 1)
+        {
             throw new ImbalancedRoundsException(this);
         }
+    }
+
+    internal int MatchupCost(Team negTeam)
+    {
+        return 1 << Math.Abs(Wins - negTeam.Wins);
     }
 }

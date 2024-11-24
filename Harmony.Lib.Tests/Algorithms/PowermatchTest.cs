@@ -13,7 +13,7 @@ public class PowermatchTest
         var round = new Round { Number = 2 };
         round.PowermatchHighLow([teamA, teamB, teamC, teamD]);
         Assert.Equal(2, round.Matchups.Count);
-        Assert.Single(round.Matchups, m => m.Neg == teamA && m.Neg == teamD);
-        Assert.Single(round.Matchups, m => m.Neg == teamB && m.Neg == teamC);
+        Assert.Single(round.Matchups, m => m.Aff == teamD && m.Neg == teamA);
+        Assert.Single(round.Matchups, m => m.Aff == teamC && m.Neg == teamB);
     }
 }

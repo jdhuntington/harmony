@@ -29,4 +29,9 @@ public class Matchup
             Neg.RecordNeg(Round.Number);
         }
     }
+
+    public override string ToString()
+    {
+        return IsBye ? $"{Aff.Name} has a bye" : $"{Aff} vs {Neg}";
+    }
 }
