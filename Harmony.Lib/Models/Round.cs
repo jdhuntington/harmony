@@ -23,6 +23,15 @@ public class Round
 
     public void PowermatchHighLow(List<Team> teams)
     {
-        throw new NotImplementedException();
+        var powermatch = new PowermatchHighLow();
+        var result = powermatch.SolveMatching(teams.Count);
+        for (var i = 0; i < result.Count; i++)
+        {
+            Matchups.Add(new Matchup
+            {
+                Aff = teams[result[i].Team1],
+                Neg = teams[result[i].Team2]
+            });
+        }
     }
 }
