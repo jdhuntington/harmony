@@ -15,17 +15,24 @@ public class PowermatchHighLow
     public List<Edge> SolveMatching(List<Team> teams)
     {
         var teamCount = teams.Count;
-        // Verify we have an even number of teams
-        if (teamCount % 2 != 0)
-        {
-            throw new ArgumentException("Team count must be even");
-        }
+        var byeRoundExists = teamCount % 2 != 0;
 
         var model = new CpModel();
 
         var edges = new List<Edge>();
         teams.ForEach(affTeam =>
         {
+            if (byeRoundExists && !affTeam.HadBye)
+            {
+                var byeEdge = new Edge
+                {
+                    Aff = affTeam,
+                    Neg = null,
+                    IsSelected = model.NewBoolVar($"bye_{affTeam.Name}"),
+                    Cost = affTeam.Wins << 20
+                };
+                edges.Add(byeEdge);
+            }
             if (affTeam.CanGoAff)
             {
                 teams.ForEach(negTeam =>
@@ -52,7 +59,12 @@ public class PowermatchHighLow
         });
 
         var allEdges = edges.Select(e => e.IsSelected).ToList();
-        model.Add(LinearExpr.Sum(allEdges) == teamCount / 2);
+        var expectedMatchupCount = teamCount / 2;
+        if (byeRoundExists)
+        {
+            expectedMatchupCount++;
+        }
+        model.Add(LinearExpr.Sum(allEdges) == expectedMatchupCount);
 
         var costTerms = edges.Select(e => e.IsSelected * e.Cost).ToList();
         model.Minimize(LinearExpr.Sum(costTerms));

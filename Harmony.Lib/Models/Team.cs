@@ -48,4 +48,8 @@ public class Team
     {
         return 1 << Math.Abs(Wins - negTeam.Wins);
     }
+
+    public void RecordOpponent(Team opponent)
+    {
+    }
 }
