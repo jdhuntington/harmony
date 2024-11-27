@@ -37,7 +37,7 @@ public class PowermatchHighLow
             {
                 teams.ForEach(negTeam =>
                 {
-                    if (affTeam != negTeam && negTeam.CanGoNeg)
+                    if (affTeam != negTeam && negTeam.CanGoNeg && !affTeam.HasHit(negTeam))
                     {
                         var edge = new Edge
                         {

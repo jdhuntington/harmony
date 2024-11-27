@@ -85,4 +85,33 @@ public class PowermatchTest
         Assert.Single(round.Matchups, m => m.Aff == teamC && m.Neg == teamB);
         Assert.Single(round.Matchups, m => m.Aff == teamD && m.Neg == teamA);
     }
+
+    [Fact]
+    public void HighLowTest()
+    {
+        var teamA = new Team { Name = "teamA", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 1 };
+        var teamB = new Team { Name = "teamB", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 2 };
+        var teamC = new Team { Name = "teamC", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 3 };
+        var teamD = new Team { Name = "teamD", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 4 };
+        var teamE = new Team { Name = "teamE", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 5 };
+        var teamF = new Team { Name = "teamF", Wins = 0, Losses = 0, AffRounds = 0, NegRounds = 0, Seed = 6 };
+        var round = new Round { Number = 1 };
+        round.PowermatchHighLow([teamA, teamB, teamC, teamD, teamE, teamF]);
+        Assert.Equal(3, round.Matchups.Count);
+        Assert.Single(round.Matchups, m => m.Contains(teamA) && m.Contains(teamF));
+        Assert.Single(round.Matchups, m => m.Contains(teamB) && m.Contains(teamE));
+        Assert.Single(round.Matchups, m => m.Contains(teamD) && m.Contains(teamD));
+    }
+
+    [Fact]
+    public void ShouldNotPairIfByeIsNeededButNoOneEligible()
+    {
+        var teamA = new Team { Name = "teamA" };
+        var teamB = new Team { Name = "teamB" };
+        var teamC = new Team { Name = "teamC" };
+        teamA.RecordBye(1);
+        teamB.RecordBye(1);
+        teamC.RecordBye(1);
+        Assert.Throws<CannotPairException>(() => (new Round { Number = 1 }).PowermatchHighLow([teamA, teamB, teamC]));
+    }
 }

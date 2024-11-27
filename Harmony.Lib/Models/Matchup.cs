@@ -15,6 +15,11 @@ public class Matchup
         if (IsBye && Aff.HadBye) throw new TooManyByesException(Aff);
     }
 
+    public bool Contains(Team team)
+    {
+        return Aff == team || Neg == team;
+    }
+
     public void Record(Round recordedRound)
     {
         Round = recordedRound;

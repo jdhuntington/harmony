@@ -14,6 +14,9 @@ public class Team
     public bool CanGoAff => AffRounds <= NegRounds;
     public bool CanGoNeg => NegRounds <= AffRounds;
 
+    public List<Team> Opponents { get; set; } = [];
+    public int Seed { get; set; }
+
     public override string ToString()
     {
         return $"{Name} ({Wins}-{Losses})";
@@ -51,5 +54,11 @@ public class Team
 
     public void RecordOpponent(Team opponent)
     {
+        Opponents.Add(opponent);
+    }
+
+    public bool HasHit(Team opponent)
+    {
+        return Opponents.Contains(opponent);
     }
 }

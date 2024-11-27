@@ -7,3 +7,5 @@ public class TooManyByesException(Team team)
 
 public class ImbalancedRoundsException(Team team)
     : Exception($"{team.Name} has had {team.AffRounds} aff rounds and {team.NegRounds} neg rounds");
+
+public class CannotPairException() : Exception("Cannot pair teams");
