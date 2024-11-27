@@ -49,7 +49,7 @@ public class Team
 
     internal int MatchupCost(Team negTeam)
     {
-        return 1 << Math.Abs(Wins - negTeam.Wins);
+        return (1 << Math.Abs(Wins - negTeam.Wins)) - Math.Abs(Seed - negTeam.Seed);
     }
 
     public void RecordOpponent(Team opponent)

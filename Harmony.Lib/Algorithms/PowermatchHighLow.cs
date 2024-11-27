@@ -1,4 +1,5 @@
 using Google.OrTools.Sat;
+using Harmony.Lib;
 using Harmony.Lib.Models;
 public class PowermatchHighLow
 {
@@ -79,6 +80,6 @@ public class PowermatchHighLow
             return edges.Where(e => solver.BooleanValue(e.IsSelected)).ToList();
         }
 
-        throw new InvalidOperationException("No solution found");
+        throw new CannotPairException();
     }
 }

@@ -112,6 +112,6 @@ public class PowermatchTest
         teamA.RecordBye(1);
         teamB.RecordBye(1);
         teamC.RecordBye(1);
-        Assert.Throws<CannotPairException>(() => (new Round { Number = 1 }).PowermatchHighLow([teamA, teamB, teamC]));
+        Assert.Throws<CannotPairException>(() => new Round { Number = 1 }.PowermatchHighLow([teamA, teamB, teamC]));
     }
 }
