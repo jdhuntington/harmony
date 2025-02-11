@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.Lib", "Harmony.Lib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.Lib.Tests", "Harmony.Lib.Tests\Harmony.Lib.Tests.csproj", "{BF776487-77EA-4B5D-B5AE-571B5D3932A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmony.Simulation", "Harmony.Simulation\Harmony.Simulation.csproj", "{74F6CF6C-0A2D-427B-8E84-9A115CE1DFF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{BF776487-77EA-4B5D-B5AE-571B5D3932A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF776487-77EA-4B5D-B5AE-571B5D3932A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF776487-77EA-4B5D-B5AE-571B5D3932A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F6CF6C-0A2D-427B-8E84-9A115CE1DFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F6CF6C-0A2D-427B-8E84-9A115CE1DFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F6CF6C-0A2D-427B-8E84-9A115CE1DFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F6CF6C-0A2D-427B-8E84-9A115CE1DFF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
