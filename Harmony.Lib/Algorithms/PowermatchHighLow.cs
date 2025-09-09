@@ -52,6 +52,8 @@ public class PowermatchHighLow
                 });
             }
         });
+        
+        // Removed verbose edge logging for performance
 
         teams.ForEach(team =>
         {
@@ -77,7 +79,8 @@ public class PowermatchHighLow
         if (status == CpSolverStatus.Optimal || status == CpSolverStatus.Feasible)
         {
             // Return only the selected edges
-            return edges.Where(e => solver.BooleanValue(e.IsSelected)).ToList();
+            var answer = edges.Where(e => solver.BooleanValue(e.IsSelected)).ToList();
+            return answer;
         }
 
         throw new CannotPairException();
