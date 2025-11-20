@@ -1,0 +1,38 @@
+{
+  "teams": [
+    {
+      "name": "Team A",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 0,
+      "affRounds": 1,
+      "negRounds": 1,
+      "seed": 1,
+      "club": null,
+      "opponentHistory": ["Team B"]
+    },
+    {
+      "name": "Team B",
+      "isByeEligible": true,
+      "wins": 1,
+      "losses": 1,
+      "affRounds": 1,
+      "negRounds": 1,
+      "seed": 2,
+      "club": null,
+      "opponentHistory": ["Team A"]
+    },
+    {
+      "name": "Team C",
+      "isByeEligible": true,
+      "wins": 0,
+      "losses": 2,
+      "affRounds": 1,
+      "negRounds": 1,
+      "seed": 3,
+      "club": null,
+      "opponentHistory": []
+    }
+  ],
+  "roundNumber": 3
+}

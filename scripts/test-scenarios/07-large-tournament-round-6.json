@@ -1,0 +1,29 @@
+{
+  "teams": [
+    {"name": "Team 1", "isByeEligible": true, "wins": 3, "losses": 0, "affRounds": 2, "negRounds": 1, "seed": 1, "club": "Alpha", "opponentHistory": ["Team 2", "Team 3", "Team 4"]},
+    {"name": "Team 2", "isByeEligible": true, "wins": 3, "losses": 0, "affRounds": 1, "negRounds": 2, "seed": 2, "club": "Beta", "opponentHistory": ["Team 1", "Team 5", "Team 6"]},
+    {"name": "Team 3", "isByeEligible": true, "wins": 3, "losses": 0, "affRounds": 2, "negRounds": 1, "seed": 3, "club": "Gamma", "opponentHistory": ["Team 1", "Team 7", "Team 8"]},
+    {"name": "Team 4", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 1, "negRounds": 2, "seed": 4, "club": "Delta", "opponentHistory": ["Team 1", "Team 9", "Team 10"]},
+    {"name": "Team 5", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 2, "negRounds": 1, "seed": 5, "club": "Epsilon", "opponentHistory": ["Team 2", "Team 11", "Team 12"]},
+    {"name": "Team 6", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 1, "negRounds": 2, "seed": 6, "club": "Zeta", "opponentHistory": ["Team 2", "Team 13", "Team 14"]},
+    {"name": "Team 7", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 2, "negRounds": 1, "seed": 7, "club": "Eta", "opponentHistory": ["Team 3", "Team 15", "Team 16"]},
+    {"name": "Team 8", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 1, "negRounds": 2, "seed": 8, "club": "Theta", "opponentHistory": ["Team 3", "Team 17", "Team 18"]},
+    {"name": "Team 9", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 2, "negRounds": 1, "seed": 9, "club": "Iota", "opponentHistory": ["Team 4", "Team 19", "Team 20"]},
+    {"name": "Team 10", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 1, "negRounds": 2, "seed": 10, "club": "Kappa", "opponentHistory": ["Team 4", "Team 21", "Team 22"]},
+    {"name": "Team 11", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 2, "negRounds": 1, "seed": 11, "club": "Lambda", "opponentHistory": ["Team 5", "Team 23", "Team 24"]},
+    {"name": "Team 12", "isByeEligible": true, "wins": 2, "losses": 1, "affRounds": 1, "negRounds": 2, "seed": 12, "club": "Mu", "opponentHistory": ["Team 5", "Team 6", "Team 7"]},
+    {"name": "Team 13", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 2, "negRounds": 1, "seed": 13, "club": "Nu", "opponentHistory": ["Team 6", "Team 8", "Team 9"]},
+    {"name": "Team 14", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 1, "negRounds": 2, "seed": 14, "club": "Xi", "opponentHistory": ["Team 6", "Team 10", "Team 11"]},
+    {"name": "Team 15", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 2, "negRounds": 1, "seed": 15, "club": "Omicron", "opponentHistory": ["Team 7", "Team 12", "Team 13"]},
+    {"name": "Team 16", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 1, "negRounds": 2, "seed": 16, "club": "Pi", "opponentHistory": ["Team 7", "Team 14", "Team 15"]},
+    {"name": "Team 17", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 2, "negRounds": 1, "seed": 17, "club": "Rho", "opponentHistory": ["Team 8", "Team 16", "Team 17"]},
+    {"name": "Team 18", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 1, "negRounds": 2, "seed": 18, "club": "Sigma", "opponentHistory": ["Team 8", "Team 18", "Team 19"]},
+    {"name": "Team 19", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 2, "negRounds": 1, "seed": 19, "club": "Tau", "opponentHistory": ["Team 9", "Team 18", "Team 20"]},
+    {"name": "Team 20", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 1, "negRounds": 2, "seed": 20, "club": "Upsilon", "opponentHistory": ["Team 9", "Team 19", "Team 21"]},
+    {"name": "Team 21", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 2, "negRounds": 1, "seed": 21, "club": "Phi", "opponentHistory": ["Team 10", "Team 20", "Team 22"]},
+    {"name": "Team 22", "isByeEligible": true, "wins": 1, "losses": 2, "affRounds": 1, "negRounds": 2, "seed": 22, "club": "Chi", "opponentHistory": ["Team 10", "Team 21", "Team 23"]},
+    {"name": "Team 23", "isByeEligible": true, "wins": 0, "losses": 3, "affRounds": 2, "negRounds": 1, "seed": 23, "club": "Psi", "opponentHistory": ["Team 11", "Team 22", "Team 24"]},
+    {"name": "Team 24", "isByeEligible": true, "wins": 0, "losses": 3, "affRounds": 1, "negRounds": 2, "seed": 24, "club": "Omega", "opponentHistory": ["Team 11", "Team 23", "Team 24"]}
+  ],
+  "roundNumber": 4
+}

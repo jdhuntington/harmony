@@ -1,0 +1,38 @@
+{
+  "teams": [
+    {
+      "name": "Team Winner",
+      "isByeEligible": false,
+      "wins": 10,
+      "losses": 0,
+      "affRounds": 5,
+      "negRounds": 5,
+      "seed": 1,
+      "club": "Harvard",
+      "opponentHistory": []
+    },
+    {
+      "name": "Team Winner 2",
+      "isByeEligible": false,
+      "wins": 10,
+      "losses": 0,
+      "affRounds": 5,
+      "negRounds": 5,
+      "seed": 2,
+      "club": "Yale",
+      "opponentHistory": []
+    },
+    {
+      "name": "Team Loser",
+      "isByeEligible": true,
+      "wins": 0,
+      "losses": 10,
+      "affRounds": 5,
+      "negRounds": 5,
+      "seed": 100,
+      "club": null,
+      "opponentHistory": []
+    }
+  ],
+  "roundNumber": 11
+}
