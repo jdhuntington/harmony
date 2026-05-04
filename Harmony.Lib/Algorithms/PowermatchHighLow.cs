@@ -5,9 +5,9 @@ public class PowermatchHighLow
 {
     public class Edge
     {
-        public Team Aff { get; init; }
+        public required Team Aff { get; init; }
         public Team? Neg { get; init; }
-        public BoolVar IsSelected { get; set; }
+        public required BoolVar IsSelected { get; set; }
         public int Cost { get; set; }
 
         public override string ToString() => $"Team {Aff.Name} vs Team {Neg?.Name ?? "Bye"}";
@@ -74,6 +74,7 @@ public class PowermatchHighLow
 
         // Solve the model
         var solver = new CpSolver();
+        solver.StringParameters = "max_time_in_seconds:15";
         var status = solver.Solve(model);
 
         if (status == CpSolverStatus.Optimal || status == CpSolverStatus.Feasible)

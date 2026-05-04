@@ -16,7 +16,7 @@ public class Team
 
     public List<Team> Opponents { get; set; } = [];
     public int Seed { get; set; }
-    
+
     public string? Club { get; set; }
 
     public override string ToString()
@@ -52,14 +52,22 @@ public class Team
     internal int MatchupCost(Team negTeam)
     {
         // Lower cost is better. We want:
-        // 1. Minimize win difference (primary goal) - use squared penalty so double pull-ups are VERY expensive
+        // 1. Minimize win difference (primary goal) - 2+ win gaps should be essentially forbidden
         // 2. Maximize seed spread (high-low pairing) - square the spread to heavily favor larger spreads
         // 3. Avoid same-club matchups
         var winDiff = Math.Abs(Wins - negTeam.Wins);
         var seedSpread = Math.Abs(Seed - negTeam.Seed);
 
-        // Square the win difference: 1-win gap = 1000, 2-win gap = 4000, 3-win gap = 9000
-        var winCost = 1000 * winDiff * winDiff;
+        // Use tiered costs to avoid overflow while making 2+ win gaps prohibitive
+        // 0-win: 0, 1-win: 100,000, 2-win: 10,000,000, 3-win: 100,000,000, 4+win: 500,000,000
+        int winCost = winDiff switch
+        {
+            0 => 0,
+            1 => 100_000,
+            2 => 10_000_000,
+            3 => 100_000_000,
+            _ => 500_000_000
+        };
 
         // Prefer larger seed spreads - square the spread and negate it
         // spread=1: cost=10000-1=9999, spread=3: cost=10000-9=9991, spread=5: cost=10000-25=9975

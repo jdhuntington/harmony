@@ -14,6 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Use Serilog for logging
 builder.Host.UseSerilog();
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Add services to the container.
 builder.Services.AddOpenApi();
 builder.Services.AddSingleton<PairingService>();
@@ -26,6 +37,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.MapPost("/api/pairing/generate", (PairingRequest request, PairingService pairingService, ILogger<Program> logger) =>

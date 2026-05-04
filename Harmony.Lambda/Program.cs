@@ -14,6 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Use Serilog for logging
 builder.Host.UseSerilog();
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 // Add services to the container.
 builder.Services.AddSingleton<PairingService>();
 
@@ -23,7 +34,12 @@ builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 var app = builder.Build();
 
+app.UseCors();
 app.UseHttpsRedirection();
+
+// Handle CORS preflight requests explicitly for Lambda Function URLs
+app.MapMethods("/api/pairing/generate", new[] { "OPTIONS" }, () => Results.Ok())
+    .WithName("PreflightGenerate");
 
 app.MapPost("/api/pairing/generate", (PairingRequest request, PairingService pairingService, ILogger<Program> logger) =>
 {

@@ -65,7 +65,10 @@ public class PairingService
 
             // Create round and generate pairings
             var round = new Round { Number = request.RoundNumber };
-            round.PowermatchHighLow(teams);
+            if (string.Equals(request.Strategy, "random", StringComparison.OrdinalIgnoreCase))
+                round.RandomMatch(teams);
+            else
+                round.PowermatchHighLow(teams);
 
             // Convert matchups to response format
             var matchupResponses = round.Matchups.Select(m => new MatchupResponse

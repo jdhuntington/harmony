@@ -34,4 +34,18 @@ public class Round
             });
         });
     }
+
+    public void RandomMatch(List<Team> teams)
+    {
+        var random = new Algorithms.RandomMatching();
+        var result = random.SolveMatching(teams);
+        result.ForEach(edge =>
+        {
+            AddMatchup(new Matchup
+            {
+                Aff = edge.Aff,
+                Neg = edge.Neg
+            });
+        });
+    }
 }

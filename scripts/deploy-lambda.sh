@@ -89,7 +89,7 @@ if aws lambda get-function --function-name "$FUNCTION_NAME" --region "$REGION" >
         --function-name "$FUNCTION_NAME" \
         --runtime dotnet8 \
         --handler Harmony.Lambda \
-        --memory-size 512 \
+        --memory-size 1769 \
         --timeout 30 \
         --region "$REGION" > /dev/null
 else
@@ -100,7 +100,7 @@ else
         --role "$ROLE_ARN" \
         --handler Harmony.Lambda \
         --zip-file "fileb://$PACKAGE_PATH" \
-        --memory-size 512 \
+        --memory-size 1769 \
         --timeout 30 \
         --region "$REGION" > /dev/null
 

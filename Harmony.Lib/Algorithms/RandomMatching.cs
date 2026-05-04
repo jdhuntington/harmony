@@ -15,9 +15,9 @@ public class RandomMatching
 
     public class Edge
     {
-        public Team Aff { get; init; }
+        public required Team Aff { get; init; }
         public Team? Neg { get; init; }
-        public BoolVar IsSelected { get; set; }
+        public required BoolVar IsSelected { get; set; }
         public int Cost { get; set; }
 
         public override string ToString() => $"Team {Aff.Name} vs Team {Neg?.Name ?? "Bye"}";
