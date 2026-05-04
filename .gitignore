@@ -288,3 +288,11 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 lambda-package.zip
+lambda-package-*.zip
+Harmony.Lambda/publish-*/
+
+# Generated test scenario outputs (recreated by scripts/run-test-scenarios.sh)
+pairings-output/
+
+# macOS
+.DS_Store
