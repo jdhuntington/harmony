@@ -1,0 +1,181 @@
+{
+  "teams": [
+    {
+      "name": "1",
+      "isByeEligible": false,
+      "wins": 4,
+      "losses": 0,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 1,
+      "club": "ASPR/CADB",
+      "opponentHistory": ["2", "8", "3", "7", "15"]
+    },
+    {
+      "name": "2",
+      "isByeEligible": false,
+      "wins": 4,
+      "losses": 0,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 2,
+      "club": "PODC",
+      "opponentHistory": ["1", "6", "11", "15", "12"]
+    },
+    {
+      "name": "3",
+      "isByeEligible": false,
+      "wins": 3,
+      "losses": 1,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 3,
+      "club": "KSD/PODC",
+      "opponentHistory": ["6", "13", "1", "9", "7"]
+    },
+    {
+      "name": "4",
+      "isByeEligible": false,
+      "wins": 3,
+      "losses": 1,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 4,
+      "club": "PODC",
+      "opponentHistory": ["9", "12", "6", "5", "11"]
+    },
+    {
+      "name": "5",
+      "isByeEligible": false,
+      "wins": 3,
+      "losses": 1,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 5,
+      "club": "PODC",
+      "opponentHistory": ["8", "9", "14", "4", "6"]
+    },
+    {
+      "name": "6",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 6,
+      "club": "PODC",
+      "opponentHistory": ["3", "2", "4", "10", "5"]
+    },
+    {
+      "name": "7",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 7,
+      "club": "IMPT",
+      "opponentHistory": ["14", "16", "8", "1", "3"]
+    },
+    {
+      "name": "8",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 8,
+      "club": "PODC",
+      "opponentHistory": ["5", "1", "7", "14", "16"]
+    },
+    {
+      "name": "9",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 9,
+      "club": "PODC",
+      "opponentHistory": ["4", "5", "15", "3", "10"]
+    },
+    {
+      "name": "10",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 10,
+      "club": "PODC",
+      "opponentHistory": ["12", "15", "13", "6", "9"]
+    },
+    {
+      "name": "11",
+      "isByeEligible": false,
+      "wins": 2,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 11,
+      "club": "PODC",
+      "opponentHistory": ["13", "14", "2", "16", "4"]
+    },
+    {
+      "name": "12",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 12,
+      "club": "PODC",
+      "opponentHistory": ["10", "4", "16", "13", "2"]
+    },
+    {
+      "name": "13",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 3,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 13,
+      "club": "PODC/ASPR",
+      "opponentHistory": ["11", "3", "10", "12", "14"]
+    },
+    {
+      "name": "14",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 14,
+      "club": "PODC",
+      "opponentHistory": ["7", "11", "5", "8", "13"]
+    },
+    {
+      "name": "15",
+      "isByeEligible": false,
+      "wins": 0,
+      "losses": 4,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 15,
+      "club": "PODC",
+      "opponentHistory": ["16", "10", "9", "2", "1"]
+    },
+    {
+      "name": "16",
+      "isByeEligible": false,
+      "wins": 0,
+      "losses": 4,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 16,
+      "club": "PODC",
+      "opponentHistory": ["15", "7", "12", "11", "8"]
+    }
+  ],
+  "roundNumber": 6
+}

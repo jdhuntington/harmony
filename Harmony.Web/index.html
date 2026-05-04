@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony Pairing Checker</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Using Tailwind CDN for development - for production, use build process -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    spacing: {
+                        '1': '0.25rem',
+                        '2': '0.5rem',
+                        '3': '0.75rem',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 p-3" x-data="pairingApp()">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="bg-white rounded shadow-sm p-3 mb-3">
+            <h1 class="text-xl font-bold text-gray-900">Harmony Pairing Checker</h1>
+            <p class="text-sm text-gray-600">Verify pairings against system of record</p>
+        </div>
+
+        <!-- Configuration -->
+        <div class="bg-white rounded shadow-sm p-3 mb-3">
+            <h2 class="text-lg font-semibold mb-2">Configuration</h2>
+            <div class="grid grid-cols-2 gap-3 text-sm mb-3">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">API Endpoint</label>
+                    <select x-model="apiEndpoint" class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                        <option value="http://localhost:5199">Localhost</option>
+                        <option value="https://c5m7lb2tcttsbawfncchlzhsdu0jniup.lambda-url.us-east-2.on.aws">Lambda</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Event</label>
+                    <select x-model="selectedEventId" :disabled="!availableEvents.length"
+                            class="w-full border border-gray-300 rounded px-2 py-1 text-sm disabled:bg-gray-100">
+                        <option value="">Select event...</option>
+                        <template x-for="event in availableEvents" :key="event.event_id">
+                            <option :value="event.event_id" x-text="event.event_name"></option>
+                        </template>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm" x-show="selectedEventId">
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">
+                        Round to Match (1-<span x-text="maxRound + 1"></span>)
+                    </label>
+                    <input type="number" x-model.number="roundToMatch" :min="1" :max="maxRound + 1"
+                           class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">
+                        Base Rankings On Round (1-<span x-text="maxRound"></span>)
+                    </label>
+                    <input type="number" x-model.number="baseRankingsOnRound" :min="1" :max="maxRound"
+                           class="w-full border border-gray-300 rounded px-2 py-1 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- File Upload -->
+        <div class="bg-white rounded shadow-sm p-3 mb-3">
+            <h2 class="text-lg font-semibold mb-2">Data Import</h2>
+            <div class="flex items-center gap-3">
+                <input type="file" @change="handleFileUpload" accept=".json"
+                       class="text-sm file:mr-3 file:py-1 file:px-3 file:rounded file:border-0
+                              file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700
+                              hover:file:bg-blue-100">
+                <span x-show="sourceData" class="text-sm text-green-600 font-medium">
+                    ✓ Loaded <span x-text="sourceData?.tournament"></span>
+                    (<span x-text="sourceData?.events?.length || 0"></span> events)
+                </span>
+            </div>
+        </div>
+
+        <!-- Munged Data Preview -->
+        <div x-show="mungedData" class="bg-white rounded shadow-sm p-3 mb-3">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-lg font-semibold">Request Preview</h2>
+                <button @click="generatePairings"
+                        :disabled="!mungedData || loading"
+                        class="px-3 py-1 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    <span x-show="!loading">Generate Pairings</span>
+                    <span x-show="loading">Loading...</span>
+                </button>
+            </div>
+            <div class="bg-gray-50 rounded p-2 max-h-48 overflow-auto">
+                <pre class="text-xs font-mono" x-text="JSON.stringify(mungedData, null, 2)"></pre>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div x-show="response" class="bg-white rounded shadow-sm p-3">
+            <h2 class="text-lg font-semibold mb-2">Results</h2>
+
+            <!-- Error -->
+            <div x-show="response && !response.success" class="bg-red-50 border border-red-200 rounded p-2 mb-3">
+                <p class="text-sm text-red-800 font-medium">Error:</p>
+                <p class="text-sm text-red-700" x-text="response?.error"></p>
+            </div>
+
+            <!-- Success -->
+            <div x-show="response && response.success">
+                <div class="mb-3">
+                    <p class="text-sm font-medium text-gray-700">
+                        Round <span x-text="mungedData?.roundNumber"></span>:
+                        <span x-text="response?.matchups?.length || 0"></span> matchups generated
+                    </p>
+                </div>
+
+                <!-- Matchups by Bracket -->
+                <div class="space-y-3">
+                    <template x-for="[bracket, matchups] in groupedMatchups" :key="bracket">
+                        <div>
+                            <!-- Bracket Header -->
+                            <div class="bg-gray-200 px-3 py-1 font-semibold text-sm border-b-2 border-gray-400 mb-1">
+                                <span x-text="bracket"></span> Bracket
+                            </div>
+
+                            <!-- Matchups Table -->
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm border-collapse">
+                                    <thead>
+                                        <tr class="bg-gray-800 text-white border-b border-gray-300">
+                                            <th class="text-left px-2 py-1 font-semibold w-12">#</th>
+                                            <th class="text-left px-2 py-1 font-semibold">Aff</th>
+                                            <th class="text-left px-2 py-1 font-semibold">Neg</th>
+                                            <th class="text-left px-2 py-1 font-semibold">Aff History</th>
+                                            <th class="text-left px-2 py-1 font-semibold">Neg History</th>
+                                            <th class="text-left px-2 py-1 font-semibold">Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template x-for="(matchup, index) in matchups" :key="index">
+                                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                                <td class="px-2 py-1" x-text="index + 1"></td>
+
+                                                <!-- Aff Team -->
+                                                <td class="px-2 py-1">
+                                                    <div class="flex items-center gap-1">
+                                                        <span class="font-medium" x-text="matchup.aff"></span>
+                                                        <span x-show="isSidelocked(matchup.aff, 'aff')"
+                                                              class="inline-block px-1.5 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full">A</span>
+                                                    </div>
+                                                    <div class="text-xs text-gray-600">
+                                                        Seed: <span x-text="getTeamSeed(matchup.aff)"></span> |
+                                                        W/L: <span x-text="getTeamRecord(matchup.aff)"></span> |
+                                                        A-N: <span x-text="getAffNegDisplay(matchup.aff)"></span>
+                                                    </div>
+                                                </td>
+
+                                                <!-- Neg Team -->
+                                                <td class="px-2 py-1">
+                                                    <div x-show="!matchup.isBye">
+                                                        <div class="flex items-center gap-1">
+                                                            <span class="font-medium" x-text="matchup.neg"></span>
+                                                            <span x-show="isSidelocked(matchup.neg, 'neg')"
+                                                                  class="inline-block px-1.5 py-0.5 bg-red-500 text-white text-xs font-bold rounded-full">N</span>
+                                                        </div>
+                                                        <div class="text-xs text-gray-600">
+                                                            Seed: <span x-text="getTeamSeed(matchup.neg)"></span> |
+                                                            W/L: <span x-text="getTeamRecord(matchup.neg)"></span> |
+                                                            A-N: <span x-text="getAffNegDisplay(matchup.neg)"></span>
+                                                        </div>
+                                                    </div>
+                                                    <span x-show="matchup.isBye" class="text-gray-400">—</span>
+                                                </td>
+
+                                                <!-- Aff Opponent History -->
+                                                <td class="px-2 py-1 text-xs text-gray-600">
+                                                    <span x-text="getOpponentList(matchup.aff)"></span>
+                                                </td>
+
+                                                <!-- Neg Opponent History -->
+                                                <td class="px-2 py-1 text-xs text-gray-600">
+                                                    <span x-show="!matchup.isBye" x-text="getOpponentList(matchup.neg)"></span>
+                                                    <span x-show="matchup.isBye" class="text-gray-400">—</span>
+                                                </td>
+
+                                                <!-- Notes -->
+                                                <td class="px-2 py-1">
+                                                    <span x-show="matchup.isBye"
+                                                          class="inline-block px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">BYE</span>
+                                                    <span x-show="!matchup.isBye && isPullup(matchup)"
+                                                          class="inline-block px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">PULLUP</span>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Raw Response -->
+                <details class="mt-3">
+                    <summary class="text-sm font-medium text-gray-700 cursor-pointer hover:text-gray-900">
+                        Raw Response
+                    </summary>
+                    <div class="bg-gray-50 rounded p-2 mt-2 max-h-96 overflow-auto">
+                        <pre class="text-xs font-mono" x-text="JSON.stringify(response, null, 2)"></pre>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
