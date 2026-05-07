@@ -296,3 +296,11 @@ pairings-output/
 
 # macOS
 .DS_Store
+
+# Local scratch / experiments — may contain real tournament data
+workbench/
+parli.txt
+rounds.txt
+Harmony.Web/pairing-export-*.json
+Harmony.Web/round*-pairings.html
+Harmony.Web/*-entries.txt
