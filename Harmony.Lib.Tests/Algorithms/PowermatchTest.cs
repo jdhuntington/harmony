@@ -105,6 +105,126 @@ public class PowermatchTest
     }
 
     [Fact]
+    public void OpponentStrengthAveragesOpponentWins()
+    {
+        var opp1 = new Team { Name = "opp1", Wins = 4 };
+        var opp2 = new Team { Name = "opp2", Wins = 2 };
+        var opp3 = new Team { Name = "opp3", Wins = 0 };
+        var team = new Team { Name = "team" };
+        team.RecordOpponent(opp1);
+        team.RecordOpponent(opp2);
+        team.RecordOpponent(opp3);
+        Assert.Equal(2.0, team.OpponentStrength);
+    }
+
+    [Fact]
+    public void OpponentStrengthIsZeroWithNoOpponents()
+    {
+        var team = new Team { Name = "team" };
+        Assert.Equal(0.0, team.OpponentStrength);
+    }
+
+    [Fact]
+    public void MatchupCostFavorsWeakestSchedulePullup()
+    {
+        // P (4-0) must pull up exactly one of Q/R/S (all 3-1).
+        // Q faced strong opponents (avg 3.0), R medium (avg 2.0), S weak (avg 1.0).
+        // Pull-up rule: prefer the lower team with weakest schedule, so P-S < P-R < P-Q.
+        var p = new Team { Name = "P", Wins = 4, Losses = 0, Seed = 1 };
+        var q = TeamWithOpponentWins("Q", wins: 3, losses: 1, seed: 2, opponentWins: [3, 3, 3, 3]);
+        var r = TeamWithOpponentWins("R", wins: 3, losses: 1, seed: 3, opponentWins: [2, 2, 2, 2]);
+        var s = TeamWithOpponentWins("S", wins: 3, losses: 1, seed: 4, opponentWins: [1, 1, 1, 1]);
+
+        Assert.Equal(3.0, q.OpponentStrength);
+        Assert.Equal(2.0, r.OpponentStrength);
+        Assert.Equal(1.0, s.OpponentStrength);
+
+        Assert.True(p.MatchupCost(s) < p.MatchupCost(r));
+        Assert.True(p.MatchupCost(r) < p.MatchupCost(q));
+    }
+
+    [Fact]
+    public void MatchupCostFavorsWeakestScheduleOnDoublePullup()
+    {
+        // Forced double pull-up (winDiff=2): heuristic still applies.
+        var p = new Team { Name = "P", Wins = 4, Losses = 0, Seed = 1 };
+        var q = TeamWithOpponentWins("Q", wins: 2, losses: 2, seed: 2, opponentWins: [3, 3, 3, 3]);
+        var r = TeamWithOpponentWins("R", wins: 2, losses: 2, seed: 3, opponentWins: [1, 1, 1, 1]);
+        Assert.True(p.MatchupCost(r) < p.MatchupCost(q));
+    }
+
+    [Fact]
+    public void MatchupCostPullupTermDoesNotApplyWithinSameBracket()
+    {
+        // Within winDiff=0, OpponentStrength must not bias the cost.
+        var a = TeamWithOpponentWins("A", wins: 3, losses: 1, seed: 1, opponentWins: [3, 3, 3, 3]);
+        var b = TeamWithOpponentWins("B", wins: 3, losses: 1, seed: 3, opponentWins: [3, 3, 3, 3]);
+        var c = TeamWithOpponentWins("C", wins: 3, losses: 1, seed: 2, opponentWins: [1, 1, 1, 1]);
+        var d = TeamWithOpponentWins("D", wins: 3, losses: 1, seed: 4, opponentWins: [1, 1, 1, 1]);
+        // Same seed spread (2) for both pairs; same winDiff (0). Cost must be equal,
+        // i.e. opponent strength must NOT influence cost when teams are in the same bracket.
+        Assert.Equal(a.MatchupCost(b), c.MatchupCost(d));
+    }
+
+    [Fact]
+    public void PowermatchPullsUpWeakestScheduleTeam()
+    {
+        // Same construction as MatchupCostFavorsWeakestSchedulePullup but as a
+        // full round pairing. Seeds are intentionally inverted (Q worst, S best)
+        // so that the old seed-spread proxy would have pulled up Q; the new
+        // opponent-strength rule should pull up S.
+        var p = new Team { Name = "P", Wins = 4, Losses = 0, AffRounds = 2, NegRounds = 2, Seed = 1 };
+        var q = TeamWithOpponentWins("Q", wins: 3, losses: 1, seed: 4, opponentWins: [3, 3, 3, 3], affRounds: 2, negRounds: 2);
+        var r = TeamWithOpponentWins("R", wins: 3, losses: 1, seed: 3, opponentWins: [2, 2, 2, 2], affRounds: 2, negRounds: 2);
+        var s = TeamWithOpponentWins("S", wins: 3, losses: 1, seed: 2, opponentWins: [1, 1, 1, 1], affRounds: 2, negRounds: 2);
+
+        Assert.Equal(3.0, q.OpponentStrength);
+        Assert.Equal(2.0, r.OpponentStrength);
+        Assert.Equal(1.0, s.OpponentStrength);
+        Assert.Equal(4, q.Opponents.Count);
+        Assert.Equal(4, r.Opponents.Count);
+        Assert.Equal(4, s.Opponents.Count);
+
+        var round = new Round { Number = 5 };
+        round.PowermatchHighLow([p, q, r, s]);
+
+        Assert.Equal(2, round.Matchups.Count);
+        Assert.Single(round.Matchups, m => m.Contains(p) && m.Contains(s));
+        Assert.Single(round.Matchups, m => m.Contains(q) && m.Contains(r));
+    }
+
+    [Fact]
+    public void PullupTiebreakerFallsBackToSeedSpread()
+    {
+        // Q and R are tied on opponent strength (both 2.0); S is stronger (4.0)
+        // and should not be the pull-up. Among the tied pair, the worse-seeded
+        // candidate (Q at seed 4) gets pulled up because of the larger spread to P.
+        var p = new Team { Name = "P", Wins = 4, Losses = 0, AffRounds = 2, NegRounds = 2, Seed = 1 };
+        var q = TeamWithOpponentWins("Q", wins: 3, losses: 1, seed: 4, opponentWins: [2, 2, 2, 2], affRounds: 2, negRounds: 2);
+        var r = TeamWithOpponentWins("R", wins: 3, losses: 1, seed: 3, opponentWins: [2, 2, 2, 2], affRounds: 2, negRounds: 2);
+        var s = TeamWithOpponentWins("S", wins: 3, losses: 1, seed: 2, opponentWins: [4, 4, 4, 4], affRounds: 2, negRounds: 2);
+
+        var round = new Round { Number = 5 };
+        round.PowermatchHighLow([p, q, r, s]);
+
+        Assert.Equal(2, round.Matchups.Count);
+        Assert.Single(round.Matchups, m => m.Contains(p) && m.Contains(q));
+        Assert.Single(round.Matchups, m => m.Contains(r) && m.Contains(s));
+    }
+
+    private static Team TeamWithOpponentWins(
+        string name, int wins, int losses, int seed, int[] opponentWins,
+        int affRounds = 0, int negRounds = 0)
+    {
+        var team = new Team { Name = name, Wins = wins, Losses = losses, Seed = seed, AffRounds = affRounds, NegRounds = negRounds };
+        for (var i = 0; i < opponentWins.Length; i++)
+        {
+            team.RecordOpponent(new Team { Name = $"{name}_opp{i}", Wins = opponentWins[i] });
+        }
+        return team;
+    }
+
+    [Fact]
     public void ShouldNotPairIfByeIsNeededButNoOneEligible()
     {
         var teamA = new Team { Name = "teamA" };

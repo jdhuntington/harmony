@@ -17,6 +17,9 @@ public class Team
     public List<Team> Opponents { get; set; } = [];
     public int Seed { get; set; }
 
+    public double OpponentStrength =>
+        Opponents.Count == 0 ? 0.0 : (double)Opponents.Sum(o => o.Wins) / Opponents.Count;
+
     public string? Club { get; set; }
 
     public override string ToString()
@@ -76,7 +79,15 @@ public class Team
 
         var clubPenalty = (this.Club == negTeam.Club && this.Club != null) ? 100 : 0;
 
-        return winCost + seedCost + clubPenalty;
+        // Pull-up: prefer lower team with weakest schedule. Scale sits above seedCost (≤10k) and below winDiff=1 jump (100k), so it never overrides bracket-distance.
+        int pullUpCost = 0;
+        if (winDiff > 0)
+        {
+            var lower = Wins < negTeam.Wins ? this : negTeam;
+            pullUpCost = (int)Math.Round(lower.OpponentStrength * 1000);
+        }
+
+        return winCost + seedCost + clubPenalty + pullUpCost;
     }
 
     public void RecordOpponent(Team opponent)
