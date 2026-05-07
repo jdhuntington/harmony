@@ -2,6 +2,8 @@ namespace Harmony.Simulation;
 
 public class Matchup(Judge judge, Team aff, Team neg)
 {
+    public Judge Judge { get; } = judge;
+
     public MatchupResult Evaluate(IRandomFactory factory)
     {
         var affValue = factory.BuildRandom(aff.Strength, aff.Variance).NextDouble();

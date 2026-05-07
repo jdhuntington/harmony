@@ -236,6 +236,7 @@ public class PowermatchTest
         Assert.Throws<CannotPairException>(() => new Round { Number = 1 }.PowermatchHighLow([teamA, teamB, teamC]));
     }
 
+    [Fact(Skip = "Long-running benchmark; enable to profile pairing performance.")]
     public void LargeScaleTournament_110Teams_6Rounds()
     {
         var teams = new List<Team>();
@@ -272,8 +273,8 @@ public class PowermatchTest
             Assert.All(round.Matchups, m => Assert.False(m.IsBye)); // Even number, no byes
             Assert.All(round.Matchups, m =>
             {
-                Assert.False(m.Aff.HasHit(m.Neg));
-                Assert.False(m.Neg.HasHit(m.Aff));
+                Assert.False(m.Aff.HasHit(m.Neg!));
+                Assert.False(m.Neg!.HasHit(m.Aff));
             });
 
             // Record the matchups and randomly assign wins
@@ -281,8 +282,8 @@ public class PowermatchTest
             foreach (var matchup in round.Matchups)
             {
                 // Record opponents
-                matchup.Aff.RecordOpponent(matchup.Neg);
-                matchup.Neg.RecordOpponent(matchup.Aff);
+                matchup.Aff.RecordOpponent(matchup.Neg!);
+                matchup.Neg!.RecordOpponent(matchup.Aff);
 
                 // Record sides
                 matchup.Aff.RecordAff(roundNum);

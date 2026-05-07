@@ -67,8 +67,8 @@ public class PairingEndpointTests : IClassFixture<WebApplicationFactory<Program>
         Assert.NotNull(result);
         Assert.True(result.Success);
         Assert.Equal(2, result.Matchups.Count);
-        Assert.Single(result.Matchups.Where(m => m.IsBye));
-        Assert.Single(result.Matchups.Where(m => !m.IsBye));
+        Assert.Single(result.Matchups, m => m.IsBye);
+        Assert.Single(result.Matchups, m => !m.IsBye);
     }
 
     [Fact]
