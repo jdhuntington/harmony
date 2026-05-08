@@ -43,43 +43,11 @@ app.MapMethods("/api/pairing/generate", new[] { "OPTIONS" }, () => Results.Ok())
 
 app.MapPost("/api/pairing/generate", (PairingRequest request, PairingService pairingService, ILogger<Program> logger) =>
 {
-    logger.LogInformation("Received pairing request for round {RoundNumber} with {TeamCount} teams",
-        request.RoundNumber, request.Teams.Count);
-
-    // Log each team's state for debugging
-    foreach (var team in request.Teams)
-    {
-        logger.LogDebug("Team {TeamName}: W-L {Wins}-{Losses}, Aff-Neg {AffRounds}-{NegRounds}, Seed {Seed}, ByeEligible {IsByeEligible}, Opponents {@OpponentHistory}",
-            team.Name, team.Wins, team.Losses, team.AffRounds, team.NegRounds, team.Seed, team.IsByeEligible, team.OpponentHistory);
-    }
-
     var response = pairingService.GeneratePairings(request);
 
-    if (response.Success)
-    {
-        logger.LogInformation("Successfully generated {MatchupCount} matchups for round {RoundNumber}",
-            response.Matchups.Count, request.RoundNumber);
+    logger.LogInformation("Pairing request handled {@Request} {@Response}", request, response);
 
-        foreach (var matchup in response.Matchups)
-        {
-            if (matchup.IsBye)
-            {
-                logger.LogInformation("Matchup: {Aff} receives BYE", matchup.Aff);
-            }
-            else
-            {
-                logger.LogInformation("Matchup: {Aff} (AFF) vs {Neg} (NEG)", matchup.Aff, matchup.Neg);
-            }
-        }
-
-        return Results.Ok(response);
-    }
-    else
-    {
-        logger.LogError("Failed to generate pairings for round {RoundNumber}: {Error}",
-            request.RoundNumber, response.Error);
-        return Results.BadRequest(response);
-    }
+    return response.Success ? Results.Ok(response) : Results.BadRequest(response);
 })
 .WithName("GeneratePairings");
 
