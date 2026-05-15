@@ -21,23 +21,38 @@ public class PowermatchHighLow
         var model = new CpModel();
 
         var edges = new List<Edge>();
+
+        // The bye is a hard pre-assignment: worst bye-eligible team (fewest wins,
+        // tie-broken by lowest seed = highest seed number) always gets it. Letting
+        // the solver weigh the bye against matchup costs allowed it to hand the bye
+        // to a top seed when avoiding a bracket pull-up was cheaper (issue #1579).
+        Team? byeTeam = null;
+        if (byeRoundExists)
+        {
+            byeTeam = teams
+                .Where(t => !t.HadBye)
+                .OrderBy(t => t.Wins)
+                .ThenByDescending(t => t.Seed)
+                .FirstOrDefault();
+            if (byeTeam == null) throw new CannotPairException();
+
+            edges.Add(new Edge
+            {
+                Aff = byeTeam,
+                Neg = null,
+                IsSelected = model.NewBoolVar($"bye_{byeTeam.Name}"),
+                Cost = 0
+            });
+        }
+
         teams.ForEach(affTeam =>
         {
-            if (byeRoundExists && !affTeam.HadBye)
-            {
-                var byeEdge = new Edge
-                {
-                    Aff = affTeam,
-                    Neg = null,
-                    IsSelected = model.NewBoolVar($"bye_{affTeam.Name}"),
-                    Cost = affTeam.Wins << 20
-                };
-                edges.Add(byeEdge);
-            }
+            if (affTeam == byeTeam) return;
             if (affTeam.CanGoAff)
             {
                 teams.ForEach(negTeam =>
                 {
+                    if (negTeam == byeTeam) return;
                     if (affTeam != negTeam && negTeam.CanGoNeg && !affTeam.HasHit(negTeam))
                     {
                         var edge = new Edge

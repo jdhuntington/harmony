@@ -1,9 +1,79 @@
 namespace Harmony.Lib.Tests;
 
+using System.Text.Json;
 using Harmony.Lib.Models;
 
 public class PowermatchTest
 {
+    // Regression test for stoaapp issue #1579 (Parli Espresso Cup, 2026-05-11).
+    // Payload captured from CloudWatch invocation at 2026-05-12T03:14:58Z.
+    // Engine handed the bye to seed 2 (63160, 5-0); the bye should always go to the
+    // worst-ranked team that is still bye-eligible (no prior bye / forfeit-win).
+    // In this R6 that is team 62534 (seed 31, 1-4, isByeEligible=true).
+    [Fact]
+    public void EspressoCupRound6_ByeGoesToWorstEligibleTeam()
+    {
+        var (teams, roundNumber) = LoadScenario("EspressoR6.json");
+
+        var round = new Round { Number = roundNumber };
+        round.PowermatchHighLow(teams);
+
+        var bye = round.Matchups.SingleOrDefault(m => m.IsBye);
+        Assert.NotNull(bye);
+        Assert.Equal("62534", bye!.Aff.Name);
+    }
+
+    private static (List<Team> teams, int roundNumber) LoadScenario(string fileName)
+    {
+        var path = Path.Combine(AppContext.BaseDirectory, "TestData", fileName);
+        using var stream = File.OpenRead(path);
+        var doc = JsonDocument.Parse(stream);
+        var root = doc.RootElement;
+        var roundNumber = root.GetProperty("roundNumber").GetInt32();
+
+        var dtos = root.GetProperty("teams").EnumerateArray()
+            .Select(t => new
+            {
+                Name = t.GetProperty("name").GetString()!,
+                IsByeEligible = t.GetProperty("isByeEligible").GetBoolean(),
+                Wins = t.GetProperty("wins").GetInt32(),
+                Losses = t.GetProperty("losses").GetInt32(),
+                AffRounds = t.GetProperty("affRounds").GetInt32(),
+                NegRounds = t.GetProperty("negRounds").GetInt32(),
+                Seed = t.GetProperty("seed").GetInt32(),
+                Club = t.TryGetProperty("club", out var c) && c.ValueKind == JsonValueKind.String ? c.GetString() : null,
+                OpponentHistory = t.GetProperty("opponentHistory").EnumerateArray().Select(o => o.GetString()!).ToList(),
+            })
+            .ToList();
+
+        var teams = dtos.Select(d => new Team
+        {
+            Name = d.Name,
+            Wins = d.Wins,
+            Losses = d.Losses,
+            AffRounds = d.AffRounds,
+            NegRounds = d.NegRounds,
+            Seed = d.Seed,
+            Club = d.Club,
+        }).ToList();
+
+        var byName = teams.ToDictionary(t => t.Name);
+        foreach (var d in dtos)
+        {
+            var team = byName[d.Name];
+            foreach (var opp in d.OpponentHistory)
+            {
+                if (byName.TryGetValue(opp, out var oppTeam))
+                    team.RecordOpponent(oppTeam);
+            }
+            // PairingService marks bye-ineligible teams as having had a bye so the algorithm skips them.
+            if (!d.IsByeEligible)
+                team.RecordBye(-1);
+        }
+
+        return (teams, roundNumber);
+    }
+
     [Fact]
     public void SimplePowermatchTest()
     {

@@ -1,0 +1,528 @@
+{
+  "teams": [
+    {
+      "name": "62483",
+      "isByeEligible": true,
+      "wins": 4,
+      "losses": 1,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 5,
+      "club": null,
+      "opponentHistory": [
+        "62682",
+        "62972",
+        "62344",
+        "65053",
+        "63160"
+      ]
+    },
+    {
+      "name": "62236",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 12,
+      "club": null,
+      "opponentHistory": [
+        "63043",
+        "62942",
+        "62972",
+        "62966",
+        "63200"
+      ]
+    },
+    {
+      "name": "66363",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 8,
+      "club": null,
+      "opponentHistory": [
+        "62924",
+        "63160",
+        "62534",
+        "62344",
+        "65053"
+      ]
+    },
+    {
+      "name": "62999",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 11,
+      "club": null,
+      "opponentHistory": [
+        "62534",
+        "62910",
+        "62976",
+        "62924",
+        "63306"
+      ]
+    },
+    {
+      "name": "62682",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 25,
+      "club": null,
+      "opponentHistory": [
+        "62483",
+        "63062",
+        "62910",
+        "62430",
+        "62976"
+      ]
+    },
+    {
+      "name": "63040",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 9,
+      "club": null,
+      "opponentHistory": [
+        "62344",
+        "62334",
+        "63062",
+        "63160",
+        "62972"
+      ]
+    },
+    {
+      "name": "62910",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 4,
+      "affRounds": 2,
+      "negRounds": 2,
+      "seed": 28,
+      "club": null,
+      "opponentHistory": [
+        "62430",
+        "62999",
+        "62682",
+        "63062"
+      ]
+    },
+    {
+      "name": "63200",
+      "isByeEligible": true,
+      "wins": 5,
+      "losses": 0,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 1,
+      "club": null,
+      "opponentHistory": [
+        "62942",
+        "62453",
+        "62924",
+        "64358",
+        "62236"
+      ]
+    },
+    {
+      "name": "63160",
+      "isByeEligible": true,
+      "wins": 5,
+      "losses": 0,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 2,
+      "club": null,
+      "opponentHistory": [
+        "62946",
+        "66363",
+        "64358",
+        "63040",
+        "62483"
+      ]
+    },
+    {
+      "name": "62453",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 22,
+      "club": null,
+      "opponentHistory": [
+        "63062",
+        "63200",
+        "62966",
+        "63024",
+        "64358"
+      ]
+    },
+    {
+      "name": "62946",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 6,
+      "club": null,
+      "opponentHistory": [
+        "63160",
+        "63043",
+        "63306",
+        "62334",
+        "63062"
+      ]
+    },
+    {
+      "name": "63714",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 24,
+      "club": null,
+      "opponentHistory": [
+        "62334",
+        "63306",
+        "62613",
+        "63043",
+        "62208"
+      ]
+    },
+    {
+      "name": "65053",
+      "isByeEligible": true,
+      "wins": 4,
+      "losses": 1,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 3,
+      "club": null,
+      "opponentHistory": [
+        "62976",
+        "62966",
+        "66651",
+        "62483",
+        "66363"
+      ]
+    },
+    {
+      "name": "62430",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 18,
+      "club": null,
+      "opponentHistory": [
+        "62910",
+        "66651",
+        "62334",
+        "62682",
+        "62613"
+      ]
+    },
+    {
+      "name": "64358",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 10,
+      "club": null,
+      "opponentHistory": [
+        "62922",
+        "62208",
+        "63160",
+        "63200",
+        "62453"
+      ]
+    },
+    {
+      "name": "62334",
+      "isByeEligible": true,
+      "wins": 4,
+      "losses": 1,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 4,
+      "club": null,
+      "opponentHistory": [
+        "63714",
+        "63040",
+        "62430",
+        "62946",
+        "66651"
+      ]
+    },
+    {
+      "name": "63062",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 19,
+      "club": null,
+      "opponentHistory": [
+        "62453",
+        "62682",
+        "63040",
+        "62910",
+        "62946"
+      ]
+    },
+    {
+      "name": "62922",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 14,
+      "club": null,
+      "opponentHistory": [
+        "64358",
+        "62924",
+        "62208",
+        "62613",
+        "62344"
+      ]
+    },
+    {
+      "name": "62613",
+      "isByeEligible": true,
+      "wins": 1,
+      "losses": 4,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 29,
+      "club": null,
+      "opponentHistory": [
+        "66651",
+        "62976",
+        "63714",
+        "62922",
+        "62430"
+      ]
+    },
+    {
+      "name": "62208",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 4,
+      "affRounds": 2,
+      "negRounds": 2,
+      "seed": 27,
+      "club": null,
+      "opponentHistory": [
+        "62972",
+        "64358",
+        "62922",
+        "63714"
+      ]
+    },
+    {
+      "name": "62924",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 23,
+      "club": null,
+      "opponentHistory": [
+        "66363",
+        "62922",
+        "63200",
+        "62999",
+        "62942"
+      ]
+    },
+    {
+      "name": "63024",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 1,
+      "affRounds": 1,
+      "negRounds": 2,
+      "seed": 26,
+      "club": null,
+      "opponentHistory": [
+        "63043",
+        "62453",
+        "62966"
+      ]
+    },
+    {
+      "name": "62972",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 20,
+      "club": null,
+      "opponentHistory": [
+        "62208",
+        "62483",
+        "62236",
+        "62942",
+        "63040"
+      ]
+    },
+    {
+      "name": "62976",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 7,
+      "club": null,
+      "opponentHistory": [
+        "65053",
+        "62613",
+        "62999",
+        "66651",
+        "62682"
+      ]
+    },
+    {
+      "name": "62966",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 15,
+      "club": null,
+      "opponentHistory": [
+        "63306",
+        "65053",
+        "62453",
+        "62236",
+        "63024"
+      ]
+    },
+    {
+      "name": "62344",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 16,
+      "club": null,
+      "opponentHistory": [
+        "63040",
+        "62534",
+        "62483",
+        "66363",
+        "62922"
+      ]
+    },
+    {
+      "name": "63306",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 21,
+      "club": null,
+      "opponentHistory": [
+        "62966",
+        "63714",
+        "62946",
+        "62534",
+        "62999"
+      ]
+    },
+    {
+      "name": "63043",
+      "isByeEligible": true,
+      "wins": 2,
+      "losses": 3,
+      "affRounds": 3,
+      "negRounds": 2,
+      "seed": 17,
+      "club": null,
+      "opponentHistory": [
+        "62236",
+        "62946",
+        "63024",
+        "63714",
+        "62534"
+      ]
+    },
+    {
+      "name": "66651",
+      "isByeEligible": true,
+      "wins": 3,
+      "losses": 2,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 13,
+      "club": null,
+      "opponentHistory": [
+        "62613",
+        "62430",
+        "65053",
+        "62976",
+        "62334"
+      ]
+    },
+    {
+      "name": "62534",
+      "isByeEligible": true,
+      "wins": 1,
+      "losses": 4,
+      "affRounds": 2,
+      "negRounds": 3,
+      "seed": 31,
+      "club": null,
+      "opponentHistory": [
+        "62999",
+        "62344",
+        "66363",
+        "63306",
+        "63043"
+      ]
+    },
+    {
+      "name": "62942",
+      "isByeEligible": false,
+      "wins": 1,
+      "losses": 4,
+      "affRounds": 1,
+      "negRounds": 3,
+      "seed": 30,
+      "club": null,
+      "opponentHistory": [
+        "63200",
+        "62236",
+        "62972",
+        "62924"
+      ]
+    }
+  ],
+  "roundNumber": 6,
+  "strategy": "powermatch"
+}

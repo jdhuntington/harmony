@@ -9,7 +9,7 @@ set -e
 REGION="us-east-2"
 FUNCTION_NAME="harmony-pairing-api"
 ROLE_NAME="harmony-lambda-role"
-SCRIPT_DIR="$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$SCRIPT_DIR/../Harmony.Lambda"
 
 echo "======================================"

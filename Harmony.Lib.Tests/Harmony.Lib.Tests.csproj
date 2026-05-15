@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Harmony.Lib\Harmony.Lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="TestData\*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
